@@ -22,7 +22,7 @@ const mesclar = globalThis.RizzygoMesclar;
 // App Check: só as páginas da Rizzygo falam com o Firestore e o login (reCAPTCHA v3, sem desafio para a pessoa).
 // A chave do site é pública. Vazia, o App Check fica desligado. A mesma chave vai no nuvem.js do Ako e da Rotina
 // e no leitor.js do rizzygo.com.br: o projeto do Firebase é um só. Passo a passo no README do firebase/ do ako.
-const APP_CHECK = '';
+const APP_CHECK = '6LfwVSAuAAAAABvACguEJrHmhS4BuwZpLQi9MsjM';
 const CONFIG = {
   apiKey: 'AIzaSyAnvFI3ZadinkXMr3F9fIO7vUeui8fIRss',
   authDomain: 'rizzygo-webapp.firebaseapp.com',
