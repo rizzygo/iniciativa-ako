@@ -10,3 +10,13 @@ Projeto `rizzygo-webapp`, plano Spark (gratuito). Usado para a cópia opcional n
 - O que vai para a nuvem e como apagar: página [/privacidade/](../privacidade/index.html).
 
 No console, em Authentication > Configurações > Domínios autorizados, ficam `ako.rizzygo.com.br`, `ako-7vx.pages.dev`, `rotina.rizzygo.com.br` e `rizzygo-rotina.pages.dev` (a Rotina, desde 14/11/2026, usa o mesmo projeto).
+
+## App Check (chave no código desde 14/11/2026)
+
+Sem App Check, qualquer pessoa cria uma conta e chama o Firestore de fora das nossas páginas, gastando a cota do dia de todo mundo. Com ele, o Firestore só aceita pedidos das páginas da Rizzygo (reCAPTCHA v3, invisível para quem usa). O código já está pronto em `nuvem.js` (Ako e Rotina) e `leitor.js` (rizzygo.com.br): a constante `APP_CHECK` vazia deixa tudo desligado.
+
+1. Crie a chave do reCAPTCHA v3 em https://www.google.com/recaptcha/admin/create : tipo "Baseada em pontuação (v3)", domínios `rizzygo.com.br`, `ako-7vx.pages.dev`, `rizzygo-rotina.pages.dev`, `rizzygo-website.pages.dev` e `localhost` (o domínio inclui os subdomínios, como ako., rotina. e rizzo.). Guarde a chave do site (pública) e a chave secreta.
+2. No console do Firebase (projeto `rizzygo-webapp`), abra App Check > Apps, escolha o app da Web, provedor reCAPTCHA v3, cole a chave secreta e salve. Ainda não clique em "Aplicar" (Enforce).
+3. Chave do site em `APP_CHECK` nos três arquivos (é pública, pode ficar no código). Feito em 14/11/2026.
+4. Espere 1 ou 2 dias e olhe App Check > APIs > Cloud Firestore: as "solicitações verificadas" precisam estar perto de 100%.
+5. Clique em "Aplicar" no Cloud Firestore. Se algo quebrar, o mesmo botão desliga na hora. Authentication fica sem aplicar por enquanto.
