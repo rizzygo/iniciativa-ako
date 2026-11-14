@@ -19,6 +19,10 @@ import {
 import '/mesclar.js?v=2026111301';
 const mesclar = globalThis.RizzygoMesclar;
 
+// App Check: só as páginas da Rizzygo falam com o Firestore e o login (reCAPTCHA v3, sem desafio para a pessoa).
+// A chave do site é pública. Vazia, o App Check fica desligado. A mesma chave vai no nuvem.js do Ako e da Rotina
+// e no leitor.js do rizzygo.com.br: o projeto do Firebase é um só. Passo a passo no README do firebase/ do ako.
+const APP_CHECK = '';
 const CONFIG = {
   apiKey: 'AIzaSyAnvFI3ZadinkXMr3F9fIO7vUeui8fIRss',
   authDomain: 'rizzygo-webapp.firebaseapp.com',
@@ -49,6 +53,12 @@ export function haQuanto(ms) {
 }
 
 const app = initializeApp(CONFIG);
+if (APP_CHECK) {
+  try {
+    const { initializeAppCheck, ReCaptchaV3Provider } = await import('https://www.gstatic.com/firebasejs/12.19.0/firebase-app-check.js');
+    initializeAppCheck(app, { provider: new ReCaptchaV3Provider(APP_CHECK), isTokenAutoRefreshEnabled: true });
+  } catch (e) { /* sem App Check, a nuvem segue; com a regra ligada no console, o Firestore recusa e o app avisa */ }
+}
 const auth = getAuth(app);
 auth.languageCode = 'pt';
 const db = getFirestore(app);
